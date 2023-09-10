@@ -77,7 +77,7 @@ async def openai_get_tokens(gen) -> AsyncGenerator[Union[str, FunctionFragment],
         if len(choices) == 0:
             continue
         choice = choices[0]
-        if choice.finish_reason:
+        if hasattr(choice, "finish_reason") and choice.finish_reason:
             break
         delta = choice.get("delta", {})
         if "text" in delta and delta["text"] is not None:
